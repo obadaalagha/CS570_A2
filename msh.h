@@ -9,17 +9,24 @@
  *             program running.
  ******************************************************************************/
 
+#ifndef MSH_H
+#define MSH_H
 #include <stdio.h>     /* For standard I/O */
 #include <stdlib.h>    /* To use standard library functions */
+#include <string.h>    /* To use string manipulation functions */
 #include <unistd.h>    /* To use getlogin() */
 //#include <pthread.h>   /* To multithread the program */
 //#include <semaphore.h> /* To manage the threads of the program */
 
-#ifndef MSH_H
-#define MSH_H
+
+
 
 /* Function prototype declarations */
 
-void begin_shell(int argc, char **argv);
+void begin_shell(int argc);
+
+void create_process(int argc, char **argv);
+
+void checkExit(char *input);
 
 #endif

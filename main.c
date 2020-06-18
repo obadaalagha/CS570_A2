@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv) {
     /* Call function to start the shell */
-    begin_shell(argc, argv);
+    begin_shell(argc);
 
     return 0;
 }

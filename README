@@ -1,0 +1,24 @@
+Obada Alagha cssc2115 819 852 274 <-- Turned in on this class account. Same student on blackboard.
+Amiel Nava   cssc2124 824 264 864
+CS 570 Summer 2020
+Assignment #2, msh microshell
+Filename: README
+
+FILE MANIFEST: Makefile, msh.c, msh.h, README
+
+COMPILE INSTRUCTIONS:
+"make" to compile.
+"make clean" to clean executable and the generated Quotes.txt file. This will allow smooth recompilation with make.
+
+OPERATING INSTRUCTIONS: No other CLI instructions.
+
+DESIGN DECISIONS:
+
+
+EXTRA FEATURES: Followed good practice in .c, .h, and makefile files.
+
+KNOWN BUGS: None
+
+LESSONS LEARNED: 
+
+

@@ -4,9 +4,7 @@
  * CS570 Summer 2020
  * Project:    Assignment #2, msh microshell
  * Filename:   msh.c
- * Notes:      This is the header file used to define every library, constants,
- *             gloabal variables, structures and functions in order to have the
- *             program running.
+ * Notes:      This is the file that contains the main() method that launches the program.
  ******************************************************************************/
 
 #include "msh.h"

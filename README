@@ -8,7 +8,7 @@ FILE MANIFEST: Makefile, header.h, main.c, processes.c, shell.c, README
 
 COMPILE INSTRUCTIONS:
 "make" to compile.
-"make clean" to clean executable and the generated Quotes.txt file. This will allow smooth recompilation with make.
+"make clean" to remove the executable and any other generated files. This will allow smooth recompilation with make.
 
 OPERATING INSTRUCTIONS: No other CLI instructions.
 

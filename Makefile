@@ -7,7 +7,7 @@
 ########################################################
 
 EXEC = pam
-FILES = main.c mshIO.c
+FILES = main.c shell.c processes.c
 CC = gcc
 #LFLAGS = -o
 CFLAGS = -c

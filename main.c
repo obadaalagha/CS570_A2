@@ -7,7 +7,7 @@
  * Notes:      This is the file that contains the main() method that launches the program.
  ******************************************************************************/
 
-#include "msh.h"
+#include "header.h"
 
 int main(int argc, char **argv) {
     /* Call function to start the shell */

@@ -4,7 +4,7 @@ CS 570 Summer 2020
 Assignment #2, msh microshell
 Filename: README
 
-FILE MANIFEST: Makefile, msh.c, msh.h, README
+FILE MANIFEST: Makefile, header.h, main.c, processes.c, shell.c, README
 
 COMPILE INSTRUCTIONS:
 "make" to compile.

@@ -13,7 +13,7 @@ void begin_shell(int argc) {
     /* While loop which runs the actual command line. */
     while(condition == 1) {
 	/* Display current user name (currently logged into edoras) and specificy you're running msh */
-	printf("%s@pam-msh$", getlogin());
+	printf("%s@pam-msh$ ", getlogin());
 
 	/* Get user input. Cut off extra length from buffer ONLY if the user typed something. */
 	fgets(input, BUFFER_LENGTH, stdin);

@@ -62,16 +62,13 @@ void create_argv(char *input) {
     char argv[argc][longest];
 
     /* Loop through and split the output into an array */
-    //while(ptr = strtok_r(
-
-    /*
     int j;
-    for(j = 0; j < argc; j++) {
-	argv[j] = strtok_r(input, " ", &input);
-    }*/
-
-    /* int i;
-    for(i = 0; i < (int)strlen(input); i++) {
-        strtok_r();	    
-    *///}
+    char *token;
+    for(i = 0; i < argc; i++) {
+	token = strtok_r(input, " ", &input);
+        for(j = 0; j < longest; j++) {
+	    argv[i][j] = token[j];
+	}
+	/* printf("%s\n", argv[i]); */
+    }
 }

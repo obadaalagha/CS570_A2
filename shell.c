@@ -59,16 +59,24 @@ void create_argv(char *input) {
     }
 
     /* Declare argc with values obtained prior */
-    char argv[argc][longest];
+    //char argv[argc][longest];
+    char **argv;
 
-    /* Loop through and split the output into an array */
+    printf("%s\n", "Before making argv");
+    /* Loop through and split the output into an array similar to argc */
     int j;
     char *token;
     for(i = 0; i < argc; i++) {
 	token = strtok_r(input, " ", &input);
-        for(j = 0; j < longest; j++) {
+	printf("i: %d\n", i);
+        for(j = 0; j < (int)strlen(token); j++) {
+	    printf("j: %d\n", j);
 	    argv[i][j] = token[j];
 	}
-	/* printf("%s\n", argv[i]); */
+	//printf("%s\n", argv[i]);
     }
+
+    printf("%s\n", "Before passing");
+    /* Pass results into create_process */
+    create_process(argc, argv);
 }

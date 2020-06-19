@@ -12,8 +12,8 @@ void begin_shell(int argc) {
 
     /* While loop which runs the actual command line. */
     while(condition == 1) {
-	/* Display current user name (currently logged into edoras) and specificy you're running msh */
-	printf("%s@pam-msh$", getlogin());
+	/* Display current user name (currently logged into edoras) and specifiy you're running msh */
+	printf("%s@msh$", getlogin());
 
 	/* Get user input. Cut off extra length from buffer ONLY if the user typed something. */
 	fgets(input, BUFFER_LENGTH, stdin);
@@ -47,6 +47,10 @@ void create_argv(char *input) {
     /* Declare argc & longest. Argc is 1 by default, since there is at least one argument. Longest is to declare argv */
     int argc = 1;
     int longest = 0;
+
+    /* For use later - the number of pipes and the locations of the pipes relative to argv */
+    int numPipes = 0;
+    int pipeLoc[10];
     
     int i;
     for(i = 0; i < (int)strlen(input); i++) {
@@ -55,7 +59,10 @@ void create_argv(char *input) {
 	    if ((i - longest) > longest) {
 		longest = i;
 	    }
-        }
+        } else if (input[i] == ' ') {
+	    numPipes++;
+	    pipeLoc[numPipes] = i;
+	}
     }
 
     /* Declare argc with values obtained prior */
@@ -71,12 +78,13 @@ void create_argv(char *input) {
 	printf("i: %d\n", i);
         for(j = 0; j < (int)strlen(token); j++) {
 	    printf("j: %d\n", j);
-	    argv[i][j] = token[j];
+	    //printf("%c\n", token[j]);
+	    argv[i][j] = (char)token[j];
 	}
 	//printf("%s\n", argv[i]);
     }
 
     printf("%s\n", "Before passing");
     /* Pass results into create_process */
-    create_process(argc, argv);
+    create_process(argc, argv, numPipes, pipeLoc);
 }

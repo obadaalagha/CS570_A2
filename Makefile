@@ -6,7 +6,7 @@
 # Filename: Makefile
 ########################################################
 
-EXEC = pam
+EXEC = msh
 FILES = main.c shell.c processes.c
 CC = gcc
 #LFLAGS = -o

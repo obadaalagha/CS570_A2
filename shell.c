@@ -27,8 +27,9 @@ int process_line(char* line){
 	    printf("You entered: %s. Size = %d.\n", refined, (int)strlen(refined));
 	    /* Check if user is quitting the microshell. If not, call function to filter and run input. */
 //	    create_argv(refined);   
-	    }
-	}    
+	}
+    }
+    return not_exit;
 }
 
 /* Rather than have a loop for tolower() and use strcmp, simply check each letter to get any combination of upper- and lower-case letters in the word exit (e.g. Exit, EXIT, exit, exIt) */

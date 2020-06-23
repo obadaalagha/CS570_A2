@@ -22,7 +22,9 @@
 
 void begin_shell(int argc);
 
-void checkExit(char *input);
+int process_line(char* line);
+
+void check_exit(char *input);
 
 void create_argv(char *input);
 

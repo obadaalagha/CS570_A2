@@ -1,3 +1,12 @@
+/******************************************************************************
+ * Obada Alagha cssc2115 819 852 274
+ * Amiel Nava   cssc2124 824 264 864
+ * CS570 Summer 2020
+ * Project:    Assignment #2, msh microshell
+ * Filename:   shell.c
+ * Notes:      
+ ******************************************************************************/
+
 #include "header.h"
 
 void begin_shell(int argc) {
@@ -14,7 +23,7 @@ void begin_shell(int argc) {
 	    fgets(input, BUFFER_LENGTH, stdin);
         not_exit = process_line(input); /* Returns 1 if user did not entered exit */
     }while(not_exit);                   /* Prompts until user enters exit */
-    
+
 }
 
 int process_line(char* line){
@@ -26,7 +35,7 @@ int process_line(char* line){
         printf("\nSize: %d",(int)strlen(refined));
 	    printf("You entered: %s. Size = %d.\n", refined, (int)strlen(refined));
 	    /* Check if user is quitting the microshell. If not, call function to filter and run input. */
-//	    create_argv(refined);   
+//	    create_argv(refined);
 	}
     }
     return not_exit;
@@ -46,7 +55,7 @@ void create_argv(char *input) {
     /* For use later - the number of pipes and the locations of the pipes relative to argv */
     int numPipes = 0;
     int pipeLoc[10];
-    
+
     int i;
     for(i = 0; i < (int)strlen(input); i++) {
 	if(input[i] == ' ') {

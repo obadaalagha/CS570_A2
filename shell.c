@@ -30,13 +30,35 @@ int process_line(char* line){
     int not_exit = check_exit(line); /* check if user entered exit */
     /* Skip line inspection if user entered exit */
     if(not_exit){
-        char* refined = strtok_r(line,"|",&line);
-        if((int)strlen(line) > 1) {
-        printf("\nSize: %d",(int)strlen(refined));
-	    printf("You entered: %s. Size = %d.\n", refined, (int)strlen(refined));
-	    /* Check if user is quitting the microshell. If not, call function to filter and run input. */
-//	    create_argv(refined);
-	}
+        char *argv[MAX_ARGS];
+        int argc = 0;                   /* Count the num of args              */
+        int num_of_pipes = 0;
+        char *ptr = line;
+        /* Get the number of pipes to instantiate 2D array                    */
+        while(*ptr++ != '\0'){
+            if(*ptr == '|')
+                num_of_pipes++;
+        }
+        ptr = NULL;
+        /* Parse the line input                                               */ 
+        while(*line != '\0'){
+            /* Remove all white trailing spaces aka trimming & pipe symbols   */
+            while(*line == ' ' || *line == '\t' || *line == '|'){
+               if(*line == '|'){
+                    //do something
+               }
+               *line++ = '\0'; /* End string when a space/pipe is encountered */
+            }
+            argv[argc] = line++;  /* Store trimmed argument                   */
+            argc++;
+            /* Move through each character in a word  until the next word     */
+            while(*line != '\0' && *line != ' ' && *line != '\t' && *line != '|'){
+                line++;
+            }
+        }
+        argv[argc] = '\0';
+        printf("Num of pipes:%d\n",num_of_pipes);
+        process_execs(argv);
     }
     return not_exit;
 }
@@ -46,6 +68,26 @@ int check_exit(char *input) {
     int is_exit = strncmp(input,"exit",4) == 0 || strncmp(input,"EXIT",4) == 0;
     return !is_exit;
 }
+
+void process_execs(char **argv){
+    pid_t proc;
+    int status;
+
+    if ( (proc = fork()) < 0){
+        printf("*** ERROR: forking child process failed\n");
+        exit(1);
+    }
+    else if (proc ==0){
+        if (execvp(*argv,argv) <0 ){
+            printf("***ERROR: exec failed\n");
+            exit(1);
+        }
+    }
+    else {
+        while(wait(&status) != proc);
+    }
+}
+
 
 void create_argv(char *input) {
     /* Declare argc & longest. Argc is 1 by default, since there is at least one argument. Longest is to declare argv */

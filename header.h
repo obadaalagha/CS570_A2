@@ -26,6 +26,8 @@ int process_line(char* line);
 
 void check_exit(char *input);
 
+void process_execs(char **argv);
+
 void create_argv(char *input);
 
 void create_process(int argc, char **argv, int numPipes, int *pipeLocs);

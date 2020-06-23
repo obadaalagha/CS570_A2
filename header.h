@@ -17,7 +17,7 @@
 #include <unistd.h>    /* To use getlogin() */
 
 #define BUFFER_LENGTH 100 /* Length of the input buffer */
-
+#define MAX_ARGS 64       /* Maximum length of arguments */
 /* Function prototype declarations */
 
 void begin_shell(int argc);

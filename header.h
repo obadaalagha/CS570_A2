@@ -24,7 +24,7 @@ void begin_shell(int argc);
 
 int process_line(char* line);
 
-void check_exit(char *input);
+int check_exit(char *input);
 
 void process_execs(char **argv);
 

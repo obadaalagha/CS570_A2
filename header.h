@@ -15,7 +15,7 @@
 #include <stdlib.h>    /* To use standard library functions */
 #include <string.h>    /* To use string manipulation functions */
 #include <unistd.h>    /* To use getlogin() */
-#include <sys/wait>    /* To use the function wait() */
+#include <sys/wait.h>    /* To use the function wait() */
 
 #define BUFFER_LENGTH 100 /* Length of the input buffer */
 #define MAX_ARGS 64       /* Maximum length of arguments */

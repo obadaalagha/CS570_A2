@@ -50,7 +50,7 @@ int process_line(char* line){
                }
                *line++ = '\0'; /* End string when a space/pipe is encountered */
             }
-            argv[argc] = line++;  /* Store trimmed argument                   */
+            argv[argc] = line;  /* Store trimmed argument                   */
             argc++;
             /* Move through each character in a word  until the next word     */
             while(*line != '\0' && *line != ' ' && *line != '\t' && *line != '|'){

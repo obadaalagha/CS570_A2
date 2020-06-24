@@ -17,6 +17,8 @@ DESIGN DECISIONS:
 
 EXTRA FEATURES: Followed good practice in .c, .h, and makefile files.
 
-KNOWN BUGS: None
+KNOWN BUGS: 
+    If user enters any amount of spaces before pressing enter, the parse method
+    will read it as a second argument.
 
 LESSONS LEARNED:

@@ -31,35 +31,55 @@ int process_line(char* line){
     int not_exit = check_exit(line); /* check if user entered exit */
     /* Skip line inspection if user entered exit */
     if(not_exit){
-        char *argv[MAX_ARGS];       /* arr of pointers will point to strings  */
         int argc = 0;                   /* Count the num of args              */
-        int num_of_pipes = 0;       /* To count our num of pipes              */
+        int index = 0; /* To use with our structure array of executables      */
+        int num_of_exec = 1;       /* To count num of executables             */
         char *ptr = line;   /* ptr to line so we can use ptr again            */
-        /* Search and get the number of pipes in the input for our 2D array   */
+        
+        /* Search in input and get the number of executables for our struct   */
         while(*ptr++ != '\0'){
-            if(*ptr == '|')
-                num_of_pipes++;
+            if(*ptr == '|') /* Pipe found                                     */
+                num_of_exec++;
         }
-        ptr = NULL; /* Disregard our pointer since we wont use it             */
+        ptr = NULL; /* Disregard our pointer since we are done with it        */
+        
+        /* Initiate our structure with the number of executables found        */
+        struct executable exec[num_of_exec];
+
         /* Parse the line input                                               */ 
         while(*line != '\0'){
-            /* Remove all white trailing spaces aka trimming & pipe symbols   */
+            /* Remove all leading spaces (trim) & pipe symbols                */
             while(*line == ' ' || *line == '\t' || *line == '|'){
-               if(*line == '|'){
-                    //do something
-               }
-               *line++ = '\0'; /* End string when a space/pipe is encountered */
+                /* If pipe encountered, reset arg counter and increment index */
+                if(*line == '|'){
+                    exec[index].arg_list[argc] = '\0';  /* Mark end           */
+                    argc = 0;
+                    index++;
+                }
+                *line++ = '\0'; /* End string when a space/pipe is encountered*/
             }
-            argv[argc] = line;  /* Store trimmed argument                   */
+            /* Store argument's data into our structure                       */
+            exec[index].arg_list[argc] = line;
             argc++;
+            exec[index].arg_count = argc;
+
             /* Move through each character in a word  until the next word     */
             while(*line != '\0' && *line != ' ' && *line != '\t' && *line != '|'){
                 line++;
             }
         }
-        argv[argc] = '\0';  /* To let the exec functions know the args ended  */
-        printf("Num of pipes:%d\n",num_of_pipes); /* For debuggingg           */
-        process_execs(argv);/* Process executable arguments                   */
+        /* Mark the end of the list to be used with our exec function         */
+        exec[index].arg_list[argc] = '\0';
+        
+        /* DEBUG */
+        printf("Num of executables:%d\n",num_of_exec);
+        int i,j;
+        for(i=0;i<num_of_exec;i++){
+            printf("Num of args: %d\n",exec[i].arg_count);
+        }
+        // Uncomment when function takes struct arg
+        // You can use exec[index].arg_list for now
+        //process_execs(exec[0].arg_list);/* Process executable arguments       */
     }
     return not_exit;
 }

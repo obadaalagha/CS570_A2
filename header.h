@@ -19,6 +19,17 @@
 
 #define BUFFER_LENGTH 100 /* Length of the input buffer */
 #define MAX_ARGS 64       /* Maximum length of arguments */
+
+/******************************************************************************* 
+ * Structure to store string arguments and argument count for each executable 
+ * the user enters in a pipe or enters a single executable. This structure will
+ * hold the list needed to call exec functions to the system.
+ ******************************************************************************/
+struct executable{
+    char *arg_list[MAX_ARGS];
+    int arg_count;
+};
+
 /* Function prototype declarations */
 
 void begin_shell(int argc);

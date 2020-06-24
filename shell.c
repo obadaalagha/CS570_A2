@@ -13,15 +13,15 @@ void begin_shell(int argc) {
     /* Variables to end for loop and buffer for the command line input. */
     int not_exit;   /* Flag to see if user entered exit */
     char *usr_id = getlogin();  /* get user id */
-    char input[BUFFER_LENGTH];
+    char input[BUFFER_LENGTH];  /* input storage */
 
     /* Do while loop which runs the actual command line. */
     do{
-	    /* Display current user name  and specifiy you're running msh */
+	    /* Display current user name                                           */
         printf("%s%c ",usr_id,'%');
 	    /* Get user input  */
 	    fgets(input, BUFFER_LENGTH, stdin);/* fgets() includes  \n            */
-        input[strlen(input)-1] = '\0';    /* Flush out the new line            */
+        input[strlen(input)-1] = '\0';    /* Flush out the new line           */
         not_exit = process_line(input); /* Returns 1 if user did not entered exit */
     }while(not_exit);                   /* Prompts until user enters exit */
 
@@ -31,16 +31,16 @@ int process_line(char* line){
     int not_exit = check_exit(line); /* check if user entered exit */
     /* Skip line inspection if user entered exit */
     if(not_exit){
-        char *argv[MAX_ARGS];
+        char *argv[MAX_ARGS];       /* arr of pointers will point to strings  */
         int argc = 0;                   /* Count the num of args              */
-        int num_of_pipes = 0;
-        char *ptr = line;
-        /* Get the number of pipes to instantiate 2D array                    */
+        int num_of_pipes = 0;       /* To count our num of pipes              */
+        char *ptr = line;   /* ptr to line so we can use ptr again            */
+        /* Search and get the number of pipes in the input for our 2D array   */
         while(*ptr++ != '\0'){
             if(*ptr == '|')
                 num_of_pipes++;
         }
-        ptr = NULL;
+        ptr = NULL; /* Disregard our pointer since we wont use it             */
         /* Parse the line input                                               */ 
         while(*line != '\0'){
             /* Remove all white trailing spaces aka trimming & pipe symbols   */
@@ -57,9 +57,9 @@ int process_line(char* line){
                 line++;
             }
         }
-        argv[argc] = '\0';
-        printf("Num of pipes:%d\n",num_of_pipes);
-        process_execs(argv);
+        argv[argc] = '\0';  /* To let the exec functions know the args ended  */
+        printf("Num of pipes:%d\n",num_of_pipes); /* For debuggingg           */
+        process_execs(argv);/* Process executable arguments                   */
     }
     return not_exit;
 }

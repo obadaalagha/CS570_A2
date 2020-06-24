@@ -21,7 +21,7 @@ void begin_shell(int argc) {
         printf("%s%c ",usr_id,'%');
 	    /* Get user input  */
 	    fgets(input, BUFFER_LENGTH, stdin);/* fgets() includes  \n            */
-        line[strlen(input)-1] = '\0';    /* Flush out the new line            */
+        input[strlen(input)-1] = '\0';    /* Flush out the new line            */
         not_exit = process_line(input); /* Returns 1 if user did not entered exit */
     }while(not_exit);                   /* Prompts until user enters exit */
 

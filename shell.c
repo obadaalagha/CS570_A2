@@ -10,26 +10,26 @@
 #include "header.h"
 
 void begin_shell(int argc) {
-    /* Variables to end for loop and buffer for the command line input. */
-    int not_exit;   /* Flag to see if user entered exit */
-    char *usr_id = getlogin();  /* get user id */
-    char input[BUFFER_LENGTH];  /* input storage */
+    /* Variables to end for loop and buffer for the command line input.       */
+    int not_exit;   /* Flag to see if user entered exit                       */
+    char *usr_id = getlogin();  /* get user id                                */
+    char input[BUFFER_LENGTH];  /* input storage                              */
 
-    /* Do while loop which runs the actual command line. */
+    /* Do while loop which runs the actual command line.                      */
     do{
-	    /* Display current user name                                           */
+	    /* Display current user name                                          */
         printf("%s%c ",usr_id,'%');
 	    /* Get user input  */
 	    fgets(input, BUFFER_LENGTH, stdin);/* fgets() includes  \n            */
         input[strlen(input)-1] = '\0';    /* Flush out the new line           */
-        not_exit = process_line(input); /* Returns 1 if user did not entered exit */
-    }while(not_exit);                   /* Prompts until user enters exit */
+        not_exit = process_line(input); /* Ret 1 if user did not entered exit */
+    }while(not_exit);                   /* Prompts until user enters exit     */
 
 }
 
 int process_line(char* line){
-    int not_exit = check_exit(line); /* check if user entered exit */
-    /* Skip line inspection if user entered exit */
+    int not_exit = check_exit(line); /* check if user entered exit            */
+    /* Skip line inspection if user entered exit                              */
     if(not_exit){
         int argc = 0;                   /* Count the num of args              */
         int index = 0; /* To use with our structure array of executables      */
@@ -71,20 +71,30 @@ int process_line(char* line){
         /* Mark the end of the list to be used with our exec function         */
         exec[index].arg_list[argc] = '\0';
         
-        /* DEBUG */
+        /******************************* DEBUG ********************************/
         printf("Num of executables:%d\n",num_of_exec);
-        int i,j;
-        for(i=0;i<num_of_exec;i++){
-            printf("Num of args: %d\n",exec[i].arg_count);
+        int i,j,num_of_args;
+        for(i=0; i < num_of_exec; i++){
+            num_of_args = exec[i].arg_count;
+            printf("Num of args: %d\n",num_of_args);
+            for(j=0;j<num_of_args;j++){
+                printf("%s ",exec[i].arg_list[j]);
+            }
+            printf("\n");
         }
+        /**********************************************************************/
+
         // Uncomment when function takes struct arg
-        // You can use exec[index].arg_list for now
-        //process_execs(exec[0].arg_list);/* Process executable arguments       */
+        // You can use exec[index].arg_list for now 
+        // Example:" a | ls -l | c" to run ls -l send exec[1].arg_list
+        // process_execs(exec[0].arg_list);/* Process executable arguments    */
     }
     return not_exit;
 }
 
-/* Rather than have a loop for tolower() and use strcmp, simply check each letter to get any combination of upper- and lower-case letters in the word exit (e.g. Exit, EXIT, exit, exIt) */
+/* Rather than have a loop for tolower(),  use strcmp, simply check each      *
+ * letter to get any combination of upper- and lower-case letters in the word *
+ * exit (e.g. Exit, EXIT, exit, exIt)                                         */
 int check_exit(char *input) {
     int is_exit = strncmp(input,"exit",4) == 0 || strncmp(input,"EXIT",4) == 0;
     return !is_exit;

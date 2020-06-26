@@ -84,10 +84,7 @@ int process_line(char* line){
         }
         /**********************************************************************/
 
-        // Uncomment when function takes struct arg
-        // You can use exec[index].arg_list for now 
-        // Example:" a | ls -l | c" to run ls -l send exec[1].arg_list
-        // process_execs(exec[0].arg_list);/* Process executable arguments    */
+        process_execs(exec,num_of_exec);
     }
     return not_exit;
 }
@@ -100,25 +97,76 @@ int check_exit(char *input) {
     return !is_exit;
 }
 
-void process_execs(char **argv){
-    pid_t proc;
-    int status;
+void process_execs(struct executable *exec,int num_of_exec){
+    if(num_of_exec == 1){
 
-    if ( (proc = fork()) < 0){
-        printf("*** ERROR: forking child process failed\n");
-        exit(1);
-    }
-    else if (proc ==0){
-        if (execvp(*argv,argv) <0 ){
-            printf("***ERROR: exec failed\n");
-            exit(1);
+        pid_t pid;
+        int status;
+        /* Fork a child process                                     */
+        if ( (pid = fork()) < 0){          
+            printf("*** ERROR: forking child process failed\n");
+            exit(EXIT_FAILURE);
+        }else if (pid ==0){
+            run_exec(exec,num_of_exec,0); 
+        }else {
+            while(wait(&status) != pid);
         }
-    }
-    else {
-        while(wait(&status) != proc);
+    }else{
+        process_pipes(exec,num_of_exec);
     }
 }
 
+void run_exec(struct executable *exec, int num_of_exec, int index){
+        if(execvp(*exec[index].arg_list,exec[index].arg_list) < 0){
+            printf("***ERROR: exec failed\n");
+            exit(EXIT_FAILURE);
+        }
+}
+
+void process_pipes(struct executable *exec, int num_of_exec){
+    int pipefd[2];      /* file descriptor to read from pipe write(1)/read(0) */
+    pid_t pid;          /* Process id                                         */
+    int fd_in = 0;      /* File descriptor input                              */
+    int exe_num = 0;    /* The current exec handling in the array str of exec */
+    int status;         /* Status is set to NULL for the wait function        */
+
+    
+    while(exe_num < num_of_exec){
+        /* Pass the file descriptor to the pipe */
+        if(pipe(pipefd) < 0 ){
+            perror("*** ERROR: failed to create pipe\n");
+            exit(EXIT_FAILURE);
+        }
+        if((pid = fork()) < 0 ){
+            printf("*** ERROR: forking child process failed\n");
+            exit(EXIT_FAILURE);
+        }
+        /* Child Process                                                      */
+        else if(pid == 0){
+            /* Replace stdout w/ the write end of the pipe                    */
+            if(dup2(fd_in, STDIN_FILENO) < 0){
+                printf("Error occur in dup2()");
+                exit(EXIT_FAILURE);
+            }
+            /* If we have not reached the end of the pipe                     */
+            if(exe_num + 1 != num_of_exec)
+                /* Replace stdin w/ the read end of the pipe                  */
+                if( dup2(pipefd[WRITE],STDOUT_FILENO) < 0){
+                    printf("Error occur in dup2()");
+                    exit(EXIT_FAILURE);
+                }
+            close(pipefd[READ]);   /* Close read to pipe in child             */
+            run_exec(exec,num_of_exec,exe_num); 
+        }
+        /* Parent Process                                                     */
+        else{
+            wait(&status);      /* Waits until one of its children terminates */
+            close(pipefd[WRITE]);   /* Close write to pipe in parent          */
+            fd_in = pipefd[READ];  /* Get file descriptor input of read       */
+            exe_num++;       /* Go the next executable when this exec id done */
+        }
+    }
+}
 
 void create_argv(char *input) {
     /* Declare argc & longest. Argc is 1 by default, since there is at least one argument. Longest is to declare argv */

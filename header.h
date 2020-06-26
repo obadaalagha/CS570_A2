@@ -19,7 +19,8 @@
 
 #define BUFFER_LENGTH 100 /* Length of the input buffer */
 #define MAX_ARGS 64       /* Maximum length of arguments */
-
+#define READ 0
+#define WRITE 1
 /******************************************************************************* 
  * Structure to store string arguments and argument count for each executable 
  * the user enters in a pipe or enters a single executable. This structure will
@@ -38,7 +39,11 @@ int process_line(char* line);
 
 int check_exit(char *input);
 
-void process_execs(char **argv);
+void process_execs(struct executable*,int);
+
+void run_exec(struct executable*,int,int);
+
+void process_pipes(struct executable*,int);
 
 void create_argv(char *input);
 

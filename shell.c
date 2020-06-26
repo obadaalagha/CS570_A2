@@ -104,7 +104,7 @@ void process_execs(struct executable *exec,int num_of_exec){
         int status;
         /* Fork a child process                                     */
         if ( (pid = fork()) < 0){          
-            printf("*** ERROR: forking child process failed\n");
+            perror("*** ERROR: forking child process failed\n");
             exit(EXIT_FAILURE);
         }else if (pid ==0){
             run_exec(exec,num_of_exec,0); 
@@ -118,7 +118,7 @@ void process_execs(struct executable *exec,int num_of_exec){
 
 void run_exec(struct executable *exec, int num_of_exec, int index){
         if(execvp(*exec[index].arg_list,exec[index].arg_list) < 0){
-            printf("***ERROR: exec failed\n");
+            perror("***ERROR: exec failed\n");
             exit(EXIT_FAILURE);
         }
 }
@@ -138,21 +138,21 @@ void process_pipes(struct executable *exec, int num_of_exec){
             exit(EXIT_FAILURE);
         }
         if((pid = fork()) < 0 ){
-            printf("*** ERROR: forking child process failed\n");
+            perror("*** ERROR: forking child process failed\n");
             exit(EXIT_FAILURE);
         }
         /* Child Process                                                      */
         else if(pid == 0){
             /* Replace stdout w/ the write end of the pipe                    */
             if(dup2(fd_in, STDIN_FILENO) < 0){
-                printf("Error occur in dup2()");
+                perror("Error occur in dup2()");
                 exit(EXIT_FAILURE);
             }
             /* If we have not reached the end of the pipe                     */
             if(exe_num + 1 != num_of_exec)
                 /* Replace stdin w/ the read end of the pipe                  */
                 if( dup2(pipefd[WRITE],STDOUT_FILENO) < 0){
-                    printf("Error occur in dup2()");
+                    perror("Error occur in dup2()");
                     exit(EXIT_FAILURE);
                 }
             close(pipefd[READ]);   /* Close read to pipe in child             */

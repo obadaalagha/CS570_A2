@@ -22,7 +22,7 @@ KNOWN BUGS:
     For example:
         msh% 
         **ERROR: exec failed
-           executable failed
+        ' ' executable failed
     Desired output:
         msh% 
         msh%

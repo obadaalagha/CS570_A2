@@ -9,7 +9,7 @@
 
 #include "header.h"
 
-void begin_shell(int argc) {
+void begin_shell() {
     /* Variables to end for loop and buffer for the command line input.       */
     int not_exit;   /* Flag to see if user entered exit                       */
     char *usr_id = getlogin();  /* get user id                                */

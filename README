@@ -18,7 +18,13 @@ DESIGN DECISIONS:
 EXTRA FEATURES: Followed good practice in .c, .h, and makefile files.
 
 KNOWN BUGS: 
-    If user enters any amount of spaces before pressing enter, the parse method
-    will read it as a second argument.
+    If user enters a blank statement, the program will try to execute it, giving failed exec error.
+    For example:
+        msh% 
+        **ERROR: exec failed
+           executable failed
+    Desired output:
+        msh% 
+        msh%
 
 LESSONS LEARNED:

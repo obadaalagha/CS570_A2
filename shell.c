@@ -58,11 +58,13 @@ int process_line(char* line){
                 }
                 *line++ = '\0'; /* End string when a space/pipe is encountered*/
             }
-            /* Store argument's data into our structure                       */
-            exec[index].arg_list[argc] = line;
-            argc++;
-            exec[index].arg_count = argc;
-
+            /* In case the user enters spaces at the end before pressing enter*/
+            if(*line != '\0'){
+                /* Store argument's data into our structure                   */
+                exec[index].arg_list[argc] = line;
+                argc++;         
+                exec[index].arg_count = argc;
+            }
             /* Move through each character in a word  until the next word     */
             while(*line != '\0' && *line != ' ' && *line != '\t' && *line != '|'){
                 line++;
@@ -98,27 +100,30 @@ int check_exit(char *input) {
 }
 
 void process_execs(struct executable *exec,int num_of_exec){
+    /* Will execeute a single executable                                     */
     if(num_of_exec == 1){
-
+        /* Variables required for running processes                          */
         pid_t pid;
         int status;
-        /* Fork a child process                                     */
+        /* Fork a child process                                               */
         if ( (pid = fork()) < 0){          
-            perror("*** ERROR: forking child process failed\n");
+            perror("**ERROR: forking child process failed\n");
             exit(EXIT_FAILURE);
-        }else if (pid ==0){
+        }else if (pid ==0){         /* Child process                          */
             run_exec(exec,num_of_exec,0); 
-        }else {
+        }else {                     /* If parent wait for child               */
             while(wait(&status) != pid);
         }
-    }else{
+    }else{ /* When multiple executables are needed such as pipes              */
         process_pipes(exec,num_of_exec);
     }
 }
 
 void run_exec(struct executable *exec, int num_of_exec, int index){
+        /* Run process and handle the error if needed                         */
         if(execvp(*exec[index].arg_list,exec[index].arg_list) < 0){
-            perror("***ERROR: exec failed\n");
+            perror("**ERROR: exec failed\n");
+            printf("  %s executable failed\n",exec[index].arg_list[0]);
             exit(EXIT_FAILURE);
         }
 }
@@ -134,11 +139,11 @@ void process_pipes(struct executable *exec, int num_of_exec){
     while(exe_num < num_of_exec){
         /* Pass the file descriptor to the pipe */
         if(pipe(pipefd) < 0 ){
-            perror("*** ERROR: failed to create pipe\n");
+            perror("**ERROR: failed to create pipe\n");
             exit(EXIT_FAILURE);
         }
         if((pid = fork()) < 0 ){
-            perror("*** ERROR: forking child process failed\n");
+            perror("**ERROR: forking child process failed\n");
             exit(EXIT_FAILURE);
         }
         /* Child Process                                                      */

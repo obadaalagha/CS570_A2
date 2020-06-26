@@ -123,7 +123,7 @@ void run_exec(struct executable *exec, int num_of_exec, int index){
         /* Run process and handle the error if needed                         */
         if(execvp(*exec[index].arg_list,exec[index].arg_list) < 0){
             perror("**ERROR: exec failed\n");
-            printf("  %s executable failed\n",exec[index].arg_list[0]);
+            printf("  '%s' executable failed\n",exec[index].arg_list[0]);
             exit(EXIT_FAILURE);
         }
 }

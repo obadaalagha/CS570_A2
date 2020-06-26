@@ -11,16 +11,17 @@
 
 #ifndef HEADER_H
 #define HEADER_H
-#include <stdio.h>     /* For standard I/O */
-#include <stdlib.h>    /* To use standard library functions */
-#include <string.h>    /* To use string manipulation functions */
-#include <unistd.h>    /* To use getlogin() */
-#include <sys/wait.h>    /* To use the function wait() */
+#include <stdio.h>          /* For standard I/O                               */
+#include <stdlib.h>         /* To use standard library functions              */
+#include <string.h>         /* To use string manipulation functions           */
+#include <unistd.h>         /* To use getlogin()                              */
+#include <sys/wait.h>       /* To use the function wait()                     */
 
-#define BUFFER_LENGTH 100 /* Length of the input buffer */
-#define MAX_ARGS 64       /* Maximum length of arguments */
-#define READ 0
+#define BUFFER_LENGTH 4096  /* Length of the input buffer                     */
+#define MAX_ARGS 64         /* Maximum length of arguments                    */
+#define READ 0              /* Use to signal the pipe file descriptor mode    */
 #define WRITE 1
+
 /******************************************************************************* 
  * Structure to store string arguments and argument count for each executable 
  * the user enters in a pipe or enters a single executable. This structure will

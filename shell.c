@@ -83,9 +83,9 @@ int parse_input(char* input) {
                 *input++ = '\0'; /* Add \0 when a space/pipe is encountered   */
             }
             /* In case the user enters spaces at the end before pressing enter*/
-            if(*line != '\0') {
+            if(*input != '\0') {
                 /* Store argument's data into our structure                   */
-                exec[index].arg_list[argc] = line;
+                exec[index].arg_list[argc] = input;
                 argc++;
                 exec[index].arg_count = argc;
             }

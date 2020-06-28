@@ -1,6 +1,6 @@
-/*******************************************************************************
- * Obada Alagha cssc2115 819 852 274
- * Amiel Nava   cssc2124 824 264 864
+/******************************************************************************
+ * Obada Alagha cssc2115 RedID: 819 852 274
+ * Amiel Nava   cssc2124 RedID: 824 264 864
  * CS570 Summer 2020
  * Project:    Assignment #2, msh microshell
  * Filename:   header.h
@@ -12,6 +12,7 @@
 
 #ifndef HEADER_H
 #define HEADER_H
+
 #include <stdio.h>     /* For standard I/O */
 #include <stdlib.h>    /* To use standard library functions */
 #include <string.h>    /* To use string manipulation functions */

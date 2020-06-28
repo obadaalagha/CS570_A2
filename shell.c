@@ -82,11 +82,13 @@ int parse_input(char* input) {
                 }
                 *input++ = '\0'; /* Add \0 when a space/pipe is encountered   */
             }
-            /* Store argument's data into our structure                       */
-            exec[index].arg_list[argc] = input;
-            argc++;
-            exec[index].arg_count = argc;
-
+            /* In case the user enters spaces at the end before pressing enter*/
+            if(*line != '\0') {
+                /* Store argument's data into our structure                   */
+                exec[index].arg_list[argc] = line;
+                argc++;
+                exec[index].arg_count = argc;
+            }
             /* Move through each character in a word  until the next word     */
             while(*input != '\0' && *input != ' ' && *input != '\t'
                   && *input != '|') {

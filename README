@@ -10,21 +10,14 @@ COMPILE INSTRUCTIONS:
 "make" to compile.
 "make clean" to remove the executable and any other generated files. This will allow smooth recompilation with make.
 
-OPERATING INSTRUCTIONS: No other CLI instructions.
+OPERATING INSTRUCTIONS: After running the program, type in the name or path of the file you'd like to run. You may also pipe multiple files within the command line. Typing in "exit" will exit the program. Typing in "debug" will provide some print statements for debugging purposes, but not add any additional functionality to the program.
 
 DESIGN DECISIONS:
-
+We decided to split the program into 3 .c files and one header file. The 3 .c files, main.c, shell.c, and processes.c each handled a different part of the program. main.c simply launched the program and called the begin_shell function in shell.c. Correspondingly, shell.c handles all parts of the program associated with running the shell, managing user input, and ensuring graceful voluntary exit. It then passes on the parsed input to processes.c, which handles launching of the executable files or chaining the multiple executables to ensure a proper pipe, alongside any ungraceful exits. The header.h file is where we stored all of our included libraries, function prototypes, constants, and structures. An if-not-defined statement is included to ensure that nothing is added in to the compilation and pre-processing process more than once.
 
 EXTRA FEATURES: Followed good practice in .c, .h, and makefile files.
 
-KNOWN BUGS: 
-    If user enters a blank statement, the program will try to execute it, giving failed exec error.
-    For example:
-        msh% 
-        **ERROR: exec failed
-        ' ' executable failed
-    Desired output:
-        msh% 
-        msh%
+KNOWN BUGS: None.
 
 LESSONS LEARNED:
+We learned how to, essentially, make a basic command line/shell. We were able to use system functions such as execvp, fork, and pipefd to properly launch (any number) applications and ensure a safe launch as well. Furthermore, my Amiel and I used git within this assignment. While I had previous experience with git, nonetheless I learned a few new things about it and Amiel was able to pick up an entirely new skill, unrelated to the material of this class specifically.

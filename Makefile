@@ -4,18 +4,19 @@
 # CS570 Summer 2020
 # Assignment #2, msh microshell
 # Filename: Makefile
+# WRITTEN BY OBADA.
 ################################################################################
 
 EXEC = msh
 FILES = main.c shell.c processes.c
 CC = gcc
-#LFLAGS = -o
+LFLAGS = -o
 CFLAGS = -c
 
 OBJECTS = $(FILES:.c=.o)
 
 $(EXEC):$(OBJECTS)
-	$(CC) -o $(EXEC) $(OBJECTS)
+	$(CC) $(LFLAGS) $(EXEC) $(OBJECTS)
 	rm -f *.o
 
 .c.o:
